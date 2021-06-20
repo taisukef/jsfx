@@ -100,4 +100,9 @@
 	}
 
 
-})(this.jsmusic = {});
+})(globalThis.jsmusic = {});
+
+const jsmusic = globalThis.jsmusic;
+
+export { jsmusic };
+

@@ -1,17 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta http-eqv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>jsfx</title>
-	<script>
-		window.onerror = function(msg, url, linenumber) {
-			alert('Error message: '+msg+'\nURL: '+url+'\nLine Number: '+linenumber);
-			return true;
-		}
-	</script>
-	<script src="jsfx.js"></script>
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width">
+<title>jsfx</title>
 </head>
 <body>
 	<div id="jsfx">
@@ -20,10 +8,10 @@
 		<div></div>
 		<div id="control" class="panel">
 			<div class="panel-title">Control</div>
-			<input type="checkbox" id="use-audiocontext" title="Use AudioContext." onclick="ChangePlayMode()">
-			<button onclick="PlayCurrent()">Play</button>
-			<button onclick="AddToLibrary()">Add</button>
-			<a class="button" id="download" href="#" onmousedown="UpdateDownloadLink()" download="sound.wav">Download</a>
+			<input type="checkbox" id="use-audiocontext" title="Use AudioContext.">
+			<button id=btnplay>Play</button>
+			<button id=btnadd>Add</button>
+			<a class="button" id="download" href="#" download="sound.wav">Download</a>
 			<div id="last-time" title="Time it took to generate."></div>
 			<div class="clear"></div>
 		</div>
@@ -41,8 +29,9 @@
 			<div id="library"></div>
 		</div>
 	</div>
-<script>
-"use strict";
+<script type="module">
+import { jsfx } from "./jsfx.js";
+
 var Library = {};
 var CurrentParams = {};
 
@@ -281,6 +270,12 @@ function list(obj, fn, X){
 }
 
 UpdateCurrentView();
+
+btnplay.onclick = () => PlayCurrent();
+btnadd.onclick = () => AddToLibrary();
+document.getElementById("use-audiocontext").onclick = () => ChangePlayMode();
+download.onmousedown = () => UpdateDownloadLink();
+
 </script>
 <style>
 	* { margin: 0; padding: 0; box-sizing: border-box; }

@@ -4,7 +4,7 @@
 	} else {
 		root.jsfx = factory();
 	}
-}(this, function() {
+}(globalThis, function() {
 	'use strict';
 
 	var chr = String.fromCharCode;
@@ -1234,3 +1234,6 @@
 
 	return jsfx;
 }));
+
+const jsfx = globalThis.jsfx;
+export { jsfx };
