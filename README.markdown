@@ -28,16 +28,19 @@ It will look something like:
 To use that library, you need to include `jsfx.js` in your code and use `jsfx.Sounds(libarry)` to initialize it. For example:
 
 ```html
-<script src="jsfx.js"></script>
-<script>
-var library = {
-	"select": {"Volume":{"Sustain":0.1,"Decay":0.15,"Punch":0.55}},
-	"long": {"Volume":{"Sustain":0.1,"Decay":0.5,"Punch":1}}
+<button id="btnselect">Select</button>
+<button id="btnlong">Long</button>
+<script type="module">
+import { jsfx } from "https://taisukef.github.io/jsfx/jsfx.js";
+
+const library = {
+	"select": { "Volume": { "Sustain": 0.1, "Decay": 0.15, "Punch": 0.55 } },
+	"long": { "Volume": { "Sustain": 0.1, "Decay": 0.5, "Punch": 1 } }
 };
-var sfx = jsfx.Sounds(library);
+const sfx = jsfx.Sounds(library);
+btnselect.onclick = () => sfx.select();
+btnlong.onclick = () => sfx.long();
 </script>
-<button onclick="sfx.select()">Select</button>
-<button onclick="sfx.long()">Long</button>
 ```
 
 Note that it will load with a delay to avoid blocking the page load for too
@@ -48,20 +51,25 @@ long, so calling those function immediately may result in silence.
 You can use AudioContext to procedurally generate the sounds, for example:
 
 ```html
-<script src="jsfx.js"></script>
-<script>
-var library = {
-	"static": {"Volume":{"Sustain":0.1,"Decay":0.15,"Punch":0.55}},
-	"dynamic": function(){
-		return {"Frequency": { "Start": Math.random()*440 + 220 }};
+<button id="btnstatic">Static</button>
+<button id="btndynamic">Dynamic</button>
+<button id="btncoin">Coin</button>
+<script type="module">
+import { jsfx } from "https://taisukef.github.io/jsfx/jsfx.js";
+	
+const library = {
+	"static": { "Volume": { "Sustain": 0.1, "Decay": 0.15, "Punch": 0.55 } },
+	"dynamic": function() {
+		return { "Frequency": { "Start": Math.random() * 440 + 220 } };
 	},
-	"coin": jsfx.Preset.Coin
+	"coin": jsfx.Preset.Coin,
 };
-var sfx = jsfx.Live(library);
+const sfx = jsfx.Live(library);
+
+btnstatic.onclick = () => sfx.static();
+btndynamic.onclick = () => sfx.dynamic();
+btncoin.onclick = () => sfx.coin();
 </script>
-<button onclick="sfx.static()">Static</button>
-<button onclick="sfx.dynamic()">Dynamic</button>
-<button onclick="sfx.coin()">Coin</button>
 ```
 
 ### Few notes...
