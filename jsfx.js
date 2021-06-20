@@ -165,6 +165,56 @@
 				node.connect(volume);
 			};
 
+			// append functions
+
+      player._createBuffer = function(params) {
+        var processor = new Processor(params, jsfx.DefaultModules);
+        var block = createFloatArray(processor.getSamplesLeft());
+        processor.generate(block);
+        return player._createBufferFromBlock(block);
+      };
+
+      player._createEmptyBuffer = function() {
+        return player._createBufferFromBlock([0]);
+      };
+
+      player._createBufferFromBlock = function(block) {
+        var buffer = context.createBuffer(1, block.length, jsfx.SampleRate);
+        var channelData = buffer.getChannelData(0);
+        channelData.set(block);
+        return buffer;
+      };
+
+      function createBufferSource(buffer, detune) {
+        var bufSrc = context.createBufferSource();
+        bufSrc.buffer = buffer;
+        if (detune != null && bufSrc.playbackRate != null) {
+          const semitoneRatio = Math.pow(2, 1 / 12);
+          bufSrc.playbackRate.value = Math.pow(semitoneRatio, detune / 100);
+        }
+        bufSrc.start = bufSrc.start || bufSrc.noteOn;
+        return bufSrc;
+      }
+
+      player._playBuffer = function(buffer, when, detune) {
+        var bufSrc = createBufferSource(buffer, detune);
+        bufSrc.connect(volume);
+        bufSrc.start(when);
+      };
+
+      player._playBufferAndConnect = function(buffer, when, node, detune) {
+        var bufSrc = createBufferSource(buffer, detune);
+        bufSrc.connect(node);
+        node.connect(volume);
+        bufSrc.start(when);
+      };
+
+      player._createGain = function() {
+        return context.createGain();
+      };
+
+			//
+			
 			return player;
 		}
 	} else {
