@@ -1004,7 +1004,7 @@
 	// GENERATORS
 
 	// uniform noise
-	jsfx.G.unoise = newGenerator("sample = random();");
+	jsfx.G.unoise = newGenerator("sample = Math.random();");
 	// sine wave
 	jsfx.G.sine = newGenerator("sample = Math.sin(phase);");
 	// saw wave
@@ -1018,7 +1018,7 @@
 
 	// STATEFUL
 	var __noiseLast = 0;
-	jsfx.G.noise = newGenerator("if(phase % TAU < 4){__noiseLast = random() * 2 - 1;} sample = __noiseLast;");
+	jsfx.G.noise = newGenerator("if(phase % TAU < 4){__noiseLast = Math.random() * 2 - 1;} sample = __noiseLast;");
 
 	// Karplus-Strong string
 	jsfx.G.string = {
