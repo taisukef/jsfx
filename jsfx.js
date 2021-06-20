@@ -214,7 +214,7 @@
       };
 
 			//
-			
+
 			return player;
 		}
 	} else {
@@ -533,7 +533,7 @@
 			$.guitarHead = 0;
 			var B = $.guitarBuffer;
 			for (var i = 0; i < B.length; i++) {
-				B[i] = Math.random() * 2 - 1;
+				B[i] = random() * 2 - 1;
 			}
 		},
 		process: function($, block) {
@@ -988,9 +988,9 @@
 				map_object(defs, function(def, name) {
 					if (def.C) {
 						var values = Object_keys(def.C);
-						out[name] = values[(values.length * Math.random()) | 0];
+						out[name] = values[(values.length * random()) | 0];
 					} else {
-						out[name] = Math.random() * (def.H - def.L) + def.L;
+						out[name] = random() * (def.H - def.L) + def.L;
 					}
 				});
 			});
@@ -1004,7 +1004,7 @@
 	// GENERATORS
 
 	// uniform noise
-	jsfx.G.unoise = newGenerator("sample = Math.random();");
+	jsfx.G.unoise = newGenerator("sample = random();");
 	// sine wave
 	jsfx.G.sine = newGenerator("sample = Math.sin(phase);");
 	// saw wave
@@ -1018,7 +1018,7 @@
 
 	// STATEFUL
 	var __noiseLast = 0;
-	jsfx.G.noise = newGenerator("if(phase % TAU < 4){__noiseLast = Math.random() * 2 - 1;} sample = __noiseLast;");
+	jsfx.G.noise = newGenerator("if(phase % TAU < 4){__noiseLast = random() * 2 - 1;} sample = __noiseLast;");
 
 	// Karplus-Strong string
 	jsfx.G.string = {
@@ -1028,7 +1028,7 @@
 
 			var buffer = createFloatArray(BS);
 			for (var i = 0; i < buffer.length; i++) {
-				buffer[i] = Math.random() * 2 - 1;
+				buffer[i] = random() * 2 - 1;
 			}
 
 			var head = 0;
@@ -1240,7 +1240,7 @@
 
 	// uniform random
 	function runif(scale, offset) {
-		var a = Math.random();
+		var a = random();
 		if (scale !== undefined)
 			a *= scale;
 		if (offset !== undefined)
@@ -1249,7 +1249,7 @@
 	}
 
 	function rchoose(gens) {
-		return gens[(gens.length * Math.random()) | 0];
+		return gens[(gens.length * random()) | 0];
 	}
 
 	function Object_keys(obj) {
@@ -1281,6 +1281,14 @@
 		}
 		return new Uint8Array(N);
 	}
+	// append function
+  let randomFunc = Math.random;
+  jsfx.setRandomFunc = function(func) {
+    randomFunc = func;
+  };
+  function random() {
+    return randomFunc();
+  }
 
 	return jsfx;
 }));
